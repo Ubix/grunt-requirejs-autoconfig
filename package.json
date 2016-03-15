@@ -1,0 +1,41 @@
+{
+  "name": "grunt-requirejs-autoconfig",
+  "description": "grunt plugin to generate require configuration and prep a library for data-main or standalone.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Ubix/grunt-requirejs-autoconfig",
+  "author": {
+    "name": "Rick Lamoreaux/UBIX Labs",
+    "email": "rick@ubixlabs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ubix/grunt-requirejs-autoconfig"
+  },
+  "bugs": {
+    "url": "https://github.com/Ubix/grunt-requirejs-autoconfig/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Ubix/grunt-requirejs-autoconfig/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": ">=0.12.2"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt": "~0.4.5"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "dependencies": {
+    "object-assign-deep": "0.0.4"
+  }
+}
