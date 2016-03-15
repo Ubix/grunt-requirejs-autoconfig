@@ -51,7 +51,7 @@ The root folder for all source files.
 
 The root folder for all output files.  Defautls to `cwd`.
 
-#### config (_optional_)
+#### options.config (_optional_)
 
 A JSON file containing the base require configuration.
 
@@ -66,22 +66,22 @@ you can include a `"name": { ... }` block that defines alternate library names f
 would set up the exoskeleton library as "backbone" in the require config).  You can also include a `"ignore": [ ... ]` array that
 lists the files to not include in the require config `paths`.
 
-#### src (_required_)
+#### options.src (_required_)
 
 The source files to parse and add to the require config.
 May be an array of source specifications.
 
-##### src.files
+##### options.src.files
 
 The file pattern(s) to look for.  Conforms with the specifications for (`grunt.file.expand`)[http://gruntjs.com/api/grunt.file#grunt.file.expand].
 
-##### src.config _(optional)_
+##### options.src.config _(optional)_
 
 Supplementary require configuration for the source files (specific to the current group of files).
 
 Follows the same guidelines as the root level `config` option.
 
-#### output (_required_)
+#### options.output (_required_)
 
 The method of output for the require config generator.  One of:
 
@@ -90,7 +90,7 @@ The method of output for the require config generator.  One of:
 * `optimizer` - generates the require configuration to be used by the (require optimizer)[http://requirejs.org/docs/optimization.html].
 * `standalone` - sets up for the optimizer to build a standalone library.
 
-#### main (_optional_)
+#### options.main (_optional_)
 
 The name of the main library (e.g. the library you would use for `data-main`).
 
@@ -104,20 +104,20 @@ The output main file will get rewritten based on the `output` option:
 * `optimizer` - a stripped down version of the configuration will be inserted into the file.
 * `standalone` - same as `optimizer`
 
-#### module (_optional_)
+#### options.module (_optional_)
 
 If the `output` is `module` then this can be an object that includes the `wrap` option.  Set this option to `true` to
 to wrap the main output file with a `require` of the configuration module.
 
-#### standalone (_optional_)
+#### options.standalone (_optional_)
 
 If the `output` is `standalone` then this can be an object with options:
 
-##### autowrap (_optional_)
+##### options.standalone.autowrap (_optional_)
 
 If `true` then the require optimizer wrap start/end files will be automatically generated.
 
-##### name (_optional_)
+##### options.standalone.name (_optional_)
 
 If using autowrap, this value will be used as the main library name to `require` in the end wrapper.
 
@@ -128,19 +128,19 @@ shims and maps, you can place "directives" in your file itself.
 
 #### name
 
-```//!require.name {name}```
+`//!require.name {name}`
 
 Set the name of this library in the require config (by default the name is what is specified in the `define`, or the name of the file).
 
 #### ignore
 
-```//!require.ignore```
+`//!require.ignore`
 
 Ignore this file (don't add it to the paths)
 
 #### map
 
-```//!require.map {map JSON}```
+`//!require.map {map JSON}`
 
 Add a map specification for this file to the require config.  The _map JSON_ must be correct, parseable JSON.
 
@@ -148,7 +148,7 @@ _Example_: `//!require.map "*": { "foo": "bar" }`
 
 #### shim
 
-```//!require.shim {shim JSON}```
+`//!require.shim {shim JSON}`
 
 Add a shim specification for this file to the require config.  This _shim JSON_ must be correct, parseable JSON.
 
@@ -156,11 +156,11 @@ _Example_: `//!require.shim "mylib": { "deps": [ "jquery", "lodash" ] }`
 
 #### config & /config
 
-```//!require.config```
+`//!require.config`
 
 In the input main file, this indicates where to insert the require configuration.  If not specified, the start of the file is used.
 
-```//!require./config```
+`//!require./config`
 
 In the input main file, this indicates where to insert the standalone end wrapper.  If not specified, the end of the file is used.
 
