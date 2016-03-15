@@ -207,7 +207,8 @@ the use of the (grunt-contrib-requirejs)[https://github.com/gruntjs/grunt-contri
 
 This example assumes that you'll be copying your files into a temporary build folder (e.g. `build`), and builds the config
 from these files.  It then relies on the optimizer to compile everything together.  The default wrappers allow the library
-to work as a standalone or as the `data-main` of a require include.
+to work as a standalone or as the `data-main` of a require include.  It also assumes the use of (almond)[https://github.com/requirejs/almond] 
+to provide the minimal require for a standalone library.
 
 ```js
 grunt.initConfig({
@@ -225,7 +226,7 @@ grunt.initConfig({
     requirejs_autoconfig: {
         cwd: path.join(buildPath, 'scripts'),
         src: [
-            { files: 'lib/**/*.js', config: 'bower.json' },
+            { files: 'lib/**/*.js', config: path.join(__dirname, 'bower.json') },
             { files: [ '*.js', '!mainlib.js' ] }
         ],
         output: 'standalone',
