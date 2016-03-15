@@ -1,6 +1,6 @@
 # grunt-requirejs-autoconfig
 
-> grunt plugin to autogenerate require configuration and prep a library t for data-main or standalone.
+> grunt plugin to autogenerate require configuration and prep a library for data-main or standalone.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
