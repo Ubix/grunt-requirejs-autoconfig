@@ -178,7 +178,7 @@ from these deployed files.
 ```js
 grunt.initConfig({
     copy: {
-        scripts: { files: [
+        scripts_dev_: { files: [
             {
                 expand: true,
                 cwd: 'scripts',
@@ -189,13 +189,15 @@ grunt.initConfig({
         ] }
     },
     requirejs_autoconfig: {
-        cwd: path.join(distributionPath, 'scripts'),
-        src: [
-            { files: 'lib/**/*.js', config: 'bower.json' },
-            { files: [ '*.js', '!mainlib.js' ] }
-        ],
-        output: 'insertion',
-    main: 'main.js'
+        dev: {
+            cwd: path.join(distributionPath, 'scripts'),
+            src: [
+                { files: 'lib/**/*.js', config: 'bower.json' },
+                { files: [ '*.js', '!mainlib.js' ] }
+            ],
+            output: 'insertion',
+            main: 'main.js'
+        }
     }
 });
 ```
@@ -213,7 +215,7 @@ to provide the minimal require for a standalone library.
 ```js
 grunt.initConfig({
     copy: {
-        scripts: { files: [
+        scripts_prod_: { files: [
             {
                 expand: true,
                 cwd: 'scripts',
@@ -224,16 +226,18 @@ grunt.initConfig({
         ] }
     },
     requirejs_autoconfig: {
-        cwd: path.join(buildPath, 'scripts'),
-        src: [
-            { files: 'lib/**/*.js', config: path.join(__dirname, 'bower.json') },
-            { files: [ '*.js', '!mainlib.js' ] }
-        ],
-        output: 'standalone',
-        main: 'main.js',
-        standalone: {
-            autowrap: true,
-            name: 'scripts/main'
+        production: {
+            cwd: path.join(buildPath, 'scripts'),
+            src: [
+                { files: 'lib/**/*.js', config: path.join(__dirname, 'bower.json') },
+                { files: [ '*.js', '!mainlib.js' ] }
+            ],
+            output: 'standalone',
+            main: 'main.js',
+            standalone: {
+                autowrap: true,
+                name: 'scripts/main'
+            }
         }
     },
     requirejs: { // NOTE: this must run after all files have been copied in place in build folder
