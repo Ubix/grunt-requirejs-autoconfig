@@ -40,11 +40,12 @@ exports.requirejs_autoconfig = {
         test.done();
     },
     optimizer: function (test) {
-        test.expect(4);
+        test.expect(6);
 
         var testPath = path.join('test', 'tmp', 'optimizer');
         compareFile(test, path.join(testPath, 'main.js'), path.join('optimizer', 'main.js'));
         compareFile(test, path.join(testPath, 'require-config.js'), path.join('optimizer', 'require-config.js'));
+        compareFile(test, path.join(testPath, 'ignored', 'extralib.js'), path.join('optimizer', 'ignored', 'extralib.js'));
 
         test.done();
     },
