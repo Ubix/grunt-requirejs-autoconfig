@@ -96,6 +96,7 @@ module.exports = function(grunt) {
                             var directive = directives[dirIdx].replace(/^\s*\/\/!require\./, '');
                             if (directive.indexOf('ignore') === 0) {
                                 // !require.ignore - skip this file
+                                ignore = true;
                                 grunt.verbose.debug('ignore directive, skipping');
                                 break;
                             } else if (directive.indexOf('map ') === 0) {

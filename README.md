@@ -204,7 +204,7 @@ grunt.initConfig({
 
 #### Standalone Production Case
 
-In production it everything can get build into a single library using the require optimizer.  This example config assumes
+In production everything can get build into a single library using the require optimizer.  This example config assumes
 the use of the (grunt-contrib-requirejs)[https://github.com/gruntjs/grunt-contrib-requirejs] plugin.
 
 This example assumes that you'll be copying your files into a temporary build folder (e.g. `build`), and builds the config
