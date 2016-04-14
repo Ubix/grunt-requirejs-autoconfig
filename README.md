@@ -35,7 +35,8 @@ grunt.initConfig({
         main: {
             src: 'mainlib.js',
             dest: path.join(buildPath, 'main.js')
-        }
+        },
+        ignored: buildPath
     }
   },
 });
@@ -62,9 +63,11 @@ _NOTE_: for bower libraries, it is recommended you add a `"require-config"` bloc
 configuration necessary for all of your bower components.
 
 In addition to any standard require configuration ((see here))[https://github.com/requirejs/r.js/blob/master/build/example.build.js],
-you can include a `"name": { ... }` block that defines alternate library names for files (e.g. `"name": { "exoskeleton": "backbone" }`
-would set up the exoskeleton library as "backbone" in the require config).  You can also include a `"ignore": [ ... ]` array that
-lists the files to not include in the require config `paths`.
+you can include:
+ 
+* a `"name": { ... }` block that defines alternate library names for files (e.g. `"name": { "exoskeleton": "backbone" }`
+  would set up the exoskeleton library as "backbone" in the require config).
+* an `"ignore": [ ... ]` array that lists the files to not include in the require config `paths`
 
 #### options.src (_required_)
 
@@ -120,6 +123,15 @@ If `true` then the require optimizer wrap start/end files will be automatically 
 ##### options.standalone.name (_optional_)
 
 If using autowrap, this value will be used as the main library name to `require` in the end wrapper.
+
+#### options.ignored (_optional_)
+
+Indicates what to do with ignored files.
+
+* If `false` or `null` they will be left in place.
+* If `true` they will be copied to the destination folder (keeping same relative path from the source folder).
+* If a folder is provided, ignored files will be copied to this folder (if absolute then relative to destination folder),
+  keeping same relative path from root.
 
 ### Configuration Directives
 
@@ -196,7 +208,8 @@ grunt.initConfig({
                 { files: [ '*.js', '!mainlib.js' ] }
             ],
             output: 'insertion',
-            main: 'main.js'
+            main: 'main.js',
+            ignored: true
         }
     }
 });
@@ -237,7 +250,8 @@ grunt.initConfig({
             standalone: {
                 autowrap: true,
                 name: 'scripts/main'
-            }
+            },
+            ignored: distributionPath
         }
     },
     requirejs: { // NOTE: this must run after all files have been copied in place in build folder

@@ -15,7 +15,7 @@ var util = require('util');
 module.exports = function(grunt) {
     var rootPath = function(rootFolder, p) {
         return (path.isAbsolute(p) ? p : path.resolve(rootFolder, p));
-    }
+    };
 
     var requireConfigGenerator = function(grunt, cfgFile, cfg) {
         grunt.log.debug('generating require config for ' + cfgFile);
@@ -34,6 +34,7 @@ module.exports = function(grunt) {
 
         // now walk sources
         var sources = cfg.src || [];
+        var ignoredFiles = (cfg.ignored ? [] : null);
         if (!util.isArray(sources)) { sources = [ sources ]; }
         for (var srcIdx = 0; srcIdx < sources.length; srcIdx++) {
             var sourceFiles = sources[srcIdx];
@@ -80,7 +81,16 @@ module.exports = function(grunt) {
                 var srcFile = rootPath(rootFolder, srcFiles[fileIdx]);
                 var ext = path.extname(srcFile);
                 var fname = path.basename(srcFile, ext);
-                if (ignoreNames.indexOf(fname) >= 0) { continue; }
+                if (ignoreNames.indexOf(fname) >= 0) {
+                    if (ignoredFiles) {
+                        if (grunt.isDir(srcFile)) {
+                            ignoredFiles.push(path.join(srcFile, '*'));
+                        } else {
+                            ignoredFiles.push(srcFile);
+                        }
+                    }
+                    continue;
+                }
                 // default name is file name without path/ext
                 var name = fname;
                 // if no config, open source files and look for //!require directives:
@@ -97,6 +107,7 @@ module.exports = function(grunt) {
                             if (directive.indexOf('ignore') === 0) {
                                 // !require.ignore - skip this file
                                 ignore = true;
+                                if (ignoredFiles) { ignoredFiles.push(srcFile); }
                                 grunt.verbose.debug('ignore directive, skipping');
                                 break;
                             } else if (directive.indexOf('map ') === 0) {
@@ -192,7 +203,7 @@ module.exports = function(grunt) {
                 moduleName = path.basename(destFile, '.js');
                 configFileContents += 'define("' + moduleName + '", function() {\n';
 
-                requireConfig.paths[moduleName] = path.relative(destPath, srcFile).replace(/\.js$/i, '');
+                requireConfig.paths[moduleName] = path.relative(destPath, destFile).replace(/\.js$/i, '');
             }
             configFileContents += 'requirejs.config(\n' + JSON.stringify(requireConfig, null, 4) + '\n);\n';
             if (module) {
@@ -250,6 +261,16 @@ module.exports = function(grunt) {
 
                 grunt.file.write(mainOutFile, mainContents);
                 grunt.log.debug(rewriteMsg);
+            }
+        }
+        if (ignoredFiles) {
+            var ignoredOutPath = rootPath(destPath, (cfg.ignored === true ? '' : cfg.ignored));
+            for (var i = 0; i < ignoredFiles.length; i++) {
+                var ignoredFile = ignoredFiles[i];
+                var relPath = path.relative(rootFolder, ignoredFile);
+                var destFile = path.resolve(ignoredOutPath, relPath);
+                console.log('copying ' + ignoredFile + ' to ' + destFile);
+                grunt.file.copy(ignoredFile, destFile);
             }
         }
     };

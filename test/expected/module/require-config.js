@@ -7,7 +7,7 @@ requirejs.config(
     "paths": {
         "libfile": "lib/libfile",
         "mylib": "mylib",
-        "require-config": "../../../mylib"
+        "require-config": "require-config"
     },
     "shim": {},
     "map": {

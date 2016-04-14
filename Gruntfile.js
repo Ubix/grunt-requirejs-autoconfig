@@ -56,7 +56,8 @@ grunt.initConfig({
             main: {
                 src: 'mainlib.js',
                 dest: 'main.js'
-            }
+            },
+            ignored: 'ignored'
         },
         standalone: {
             cwd: path.join('test', 'fixtures'),
