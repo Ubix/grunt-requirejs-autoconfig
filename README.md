@@ -35,7 +35,7 @@ grunt.initConfig({
         main: {
             src: 'mainlib.js',
             dest: path.join(buildPath, 'main.js')
-        }
+        },
         ignored: buildPath
     }
   },
@@ -208,7 +208,8 @@ grunt.initConfig({
                 { files: [ '*.js', '!mainlib.js' ] }
             ],
             output: 'insertion',
-            main: 'main.js'
+            main: 'main.js',
+            ignored: true
         }
     }
 });
@@ -249,7 +250,8 @@ grunt.initConfig({
             standalone: {
                 autowrap: true,
                 name: 'scripts/main'
-            }
+            },
+            ignored: distributionPath
         }
     },
     requirejs: { // NOTE: this must run after all files have been copied in place in build folder
