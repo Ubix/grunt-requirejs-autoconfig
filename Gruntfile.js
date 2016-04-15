@@ -91,6 +91,23 @@ grunt.initConfig({
             module: {
                 wrap: true
             }
+        },
+        optimizer_insertion: {
+            cwd: path.join('test', 'fixtures'),
+            dest: path.join('..', 'tmp', 'optimizer_insertion'),
+            src: [
+                { files: 'lib/**/*.js', config: 'cfg.json' },
+                { files: [ '*.js', '!mainlib.js' ] }
+            ],
+            output: 'optimizer',
+            insertion: {
+                style: 'all',
+                prefix: 'http://localhost/' 
+            },
+            main: {
+                src: 'mainlib.js',
+                dest: 'main.js'
+            }
         }
     },
 

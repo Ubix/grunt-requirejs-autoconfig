@@ -104,8 +104,27 @@ The output main file will get rewritten based on the `output` option:
 
 * `insertion` - the configuration is inserted into the file.
 * `module` - the file may get wrapped by a `require` of the config module.
-* `optimizer` - a stripped down version of the configuration will be inserted into the file.
-* `standalone` - same as `optimizer`
+* `optimizer`, `standalone` - based on the `insertion` option.
+
+#### options.insertion (_optional_)
+
+Indicates what of the require configuration to insert into a standalone or optimizer main file.
+
+Can be one of:
+
+* `default` - a stripped down version of the configuration.
+* `all` - the full configuration.
+* `none` - no configuration
+
+Or can be an object with options:
+
+##### options.insertion.style
+
+One of the values above.
+
+##### options.insertion.prefix
+
+The prefix to use for the file for each inserted library (e.g. `https://mydomain.com/`).
 
 #### options.module (_optional_)
 
