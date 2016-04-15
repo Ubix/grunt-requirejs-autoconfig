@@ -237,8 +237,33 @@ module.exports = function(grunt) {
                 cfgInsert = '\nrequirejs.config(' + JSON.stringify(requireConfig, null, 4) + ');\n';
                 rewriteMsg = 'inserted require config into ' + cfg.main;
             } else if (cfg.output === 'optimizer' || cfg.output === 'standalone') {
-                cfgInsert = 'requirejs.config({ map: ' + JSON.stringify(requireConfig.map, null, 4) + '});\n';
-                rewriteMsg = 'added optimizer require config to ' + cfg.main;
+                var insertion = cfg.insertion || 'default';
+                var insertionConfig = requireConfig;
+                if (util.isObject(insertion)) {
+                    if (insertion.prefix) {
+                        if (!/\/$/.test(insertion.prefix)) {
+                            insertion.prefix += '/';
+                        }
+                        insertionConfig = Object.assign({}, requireConfig);
+                        if (insertion.style === 'all') {
+                            var insertionPaths = {};
+                            for (var p in requireConfig.paths) {
+                                if (p) {
+                                    insertionPaths[p] = insertion.prefix + requireConfig.paths[p];
+                                }
+                            }
+                            insertionConfig.paths = insertionPaths;
+                        }
+                    }
+                    insertion = insertion.style;
+                }
+                if (insertion === 'all') {
+                    cfgInsert = '\nrequirejs.config(' + JSON.stringify(insertionConfig, null, 4) + ');\n';
+                    rewriteMsg = 'added require config into ' + cfg.main;
+                } else if (insertion === 'default') {
+                    cfgInsert = 'requirejs.config({ map: ' + JSON.stringify(requireConfig.map, null, 4) + '});\n';
+                    rewriteMsg = 'added optimizer require config to ' + cfg.main;
+                }
 
                 // TODO: for some reason, the optimizer needs the root library to be anonymous (maybe).
                 // TODO: but it needs to be named to work properly when in development mode.

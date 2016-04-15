@@ -68,6 +68,15 @@ exports.requirejs_autoconfig = {
         compareFile(test, path.join(testPath, 'require-config.js'), path.join('module', 'require-config.js'));
 
         test.done();
+    },
+    optimizer_insertion: function(test) {
+        test.expect(4);
+
+        var testPath = path.join('test', 'tmp', 'optimizer_insertion');
+        compareFile(test, path.join(testPath, 'main.js'), path.join('optimizer_insertion', 'main.js'));
+        compareFile(test, path.join(testPath, 'require-config.js'), path.join('optimizer_insertion', 'require-config.js'));
+
+        test.done();
     }
 };
 
